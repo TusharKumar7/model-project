@@ -1,15 +1,15 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <modal-component></modal-component>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import ModalComponent from './components/ModalComponent.vue'
+
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    ModalComponent,
   }
 }
 </script>
