@@ -1,4 +1,4 @@
-<template>
+  <template>
   <div class="app-container">
     <h1>My First Vue App</h1>
     <div class="input-container">
@@ -7,13 +7,18 @@
     <div class="btn-container">
       <button id="focus-btn" @click="focusInput()">Focus</button>
       <button id="modal-btn" @click="showModal = true">Open Modal</button>
+      <button id="theme-btn" @click="themeHandler()">
+        {{ theme === "sale" ? "Normal Theme" : "Sale Theme" }}
+      </button>
     </div>
   </div>
   <div class="modal" v-if="showModal" @click="closeModal()">
-    <ModalComponent
-      title="Sign up for the Giveaway!"
-      content="Grab Your ninja swag for half price!"
-    />
+    <ModalComponent title="Sign up for the Giveaway!" content="Grab Your ninja swag for half price!" :theme="theme">
+      <template #links>
+        <a href="#" :class="[theme === 'sale' ? 'signup-sale-button' : 'signup-normal-button']" class="signup-button">Sign Up</a>
+        <a href="#" :class="[theme === 'sale' ? 'login-sale-button' : 'login-normal-button']" class="login-button">Login</a>
+      </template>
+    </ModalComponent>
   </div>
 </template>
 
@@ -28,6 +33,7 @@ export default {
   data: function () {
     return {
       showModal: false,
+      theme: "normal",
     };
   },
   methods: {
@@ -39,6 +45,9 @@ export default {
     closeModal() {
       this.showModal = false;
     },
+    themeHandler() {
+      this.theme = this.theme === "sale" ? "normal" : "sale";
+    },
   },
 };
 </script>
@@ -49,6 +58,10 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+}
+
+a{
+  text-decoration: none;
 }
 
 .app-container {
@@ -86,6 +99,27 @@ export default {
   box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
     rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
 }
+
+.signup-button, .login-button{
+  outline: none;
+  padding: 7px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.signup-normal-button,.login-normal-button{
+  color: #05b7b0;
+  background-color: #fff;
+  border: 1px solid #05b7b0;
+}
+
+.signup-sale-button,.login-sale-button{
+  color: #EC283A;
+  background-color: #fff;
+  border: 1px solid #EC283A;
+}
+
 
 .btn-container button:hover {
   color: #2563eb;

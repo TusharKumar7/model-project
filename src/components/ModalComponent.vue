@@ -1,22 +1,22 @@
 <template>
-<div class="main-container">
-  <div class="modal-container">
-    <div class="modal-title">{{ title }}</div>
-    <div class="modal-content">{{ content }}</div>
+  <div class="main-container">
+    <div :class="[theme === 'sale' ? 'sale-theme-modal' : 'normal-theme-modal']" class="modal-container">
+      <div :class="[theme === 'sale' ? 'sale-theme-title' : 'normal-theme-title']" class="modal-title">{{ title }}</div>
+      <div :class="[theme === 'sale' ? 'sale-theme-content' : 'normal-theme-content']" class="modal-content">{{ content }}</div>
+      <div class="modal-links">
+        <slot name="links"></slot>
+      </div>
+    </div>
   </div>
-</div>
-
 </template>
 
 <script>
 export default {
   name: "ModalComponent",
-  data() {
-    return {};
-  },
   props: {
     title: String,
     content: String,
+    theme: String,
   },
 };
 </script>
@@ -38,9 +38,9 @@ export default {
   flex-direction: column;
   align-items: center;
   padding: 30px;
-  background: #fff;
   border-radius: 10px;
   gap: 30px;
+  /* background: #fff; */
   box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
   width: 25%;
   margin: 0 auto;
@@ -52,13 +52,39 @@ export default {
   cursor: default;
 }
 
+.normal-theme-modal{
+    background: #fff;
+}
+
+.sale-theme-modal{
+    background: #EC283A;
+}
+
 .modal-title {
-  color: #05b7b0;
   font-size: 1.5rem;
   font-weight: 600;
 }
 
-.modal-content {
-  color: gray;
+.normal-theme-title{
+    color: #05b7b0;
+}
+
+.sale-theme-content{
+    color: #fff;
+}
+
+.normal-theme-content{
+    color: #000;
+}
+
+.sale-theme-title{
+    color:#fff
+}
+
+.modal-links{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
 }
 </style>
