@@ -1,12 +1,13 @@
 <template>
     <div class="main-container" @click.self="$emit('showModal')">
-        <div :class="[theme === 'sale' ? 'sale-theme-modal' : 'normal-theme-modal']" class="modal-container">
-            <div :class="[theme === 'sale' ? 'sale-theme-title' : 'normal-theme-title']" class="modal-title">
+        <div :class="[theme === 'sale' && 'sale-theme-modal', 'modal-container']">
+            <div :class="[theme === 'sale' && 'sale-theme-title', 'modal-title']">
                 {{ title }}
             </div>
-            <div :class="[theme === 'sale' ? 'sale-theme-content' : 'normal-theme-content']" class="modal-content">
+            <div :class="[theme === 'sale' && 'sale-theme-content', 'modal-content']">
                 {{ content }}
             </div>
+            <slot></slot>
             <div class="modal-links">
                 <slot name="links"></slot>
             </div>
@@ -44,7 +45,7 @@ export default {
     padding: 30px;
     border-radius: 10px;
     gap: 30px;
-    /* background: #fff; */
+    background: #fff;
     box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
         rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
     width: 25%;
@@ -57,10 +58,6 @@ export default {
     cursor: default;
 }
 
-.normal-theme-modal {
-    background: #fff;
-}
-
 .sale-theme-modal {
     background: #ec283a;
 }
@@ -68,19 +65,12 @@ export default {
 .modal-title {
     font-size: 1.5rem;
     font-weight: 600;
-}
-
-.normal-theme-title {
     color: #05b7b0;
 }
 
 .sale-theme-content,
 .sale-theme-title {
     color: #fff;
-}
-
-.normal-theme-content {
-    color: #000;
 }
 
 .modal-links {
