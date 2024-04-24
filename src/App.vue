@@ -1,26 +1,30 @@
   <template>
-  <div class="app-container">
-    <h1>My First Vue App</h1>
-    <div class="input-container">
-      <input type="text" ref="focusInput" />
+    <div class="app-container">
+      <h1>My First Vue App</h1>
+      <div class="input-container">
+        <input type="text" ref="focusInput" />
+      </div>
+      <div class="btn-container">
+        <button id="focus-btn" @click="focusInput()">Focus</button>
+        <button id="modal-btn" @click="showModal()">Open Modal</button>
+        <button id="theme-btn" @click="themeHandler()">
+          {{ theme === "sale" ? "Normal Theme" : "Sale Theme" }}
+        </button>
+      </div>
     </div>
-    <div class="btn-container">
-      <button id="focus-btn" @click="focusInput()">Focus</button>
-      <button id="modal-btn" @click="showModal = true">Open Modal</button>
-      <button id="theme-btn" @click="themeHandler()">
-        {{ theme === "sale" ? "Normal Theme" : "Sale Theme" }}
-      </button>
+    <div class="modal" v-if="showModalComponent">
+      <ModalComponent title="Sign up for the Giveaway!" content="Grab Your ninja swag for half price!" :theme="theme"
+        @show-modal="showModal">
+        <template #links>
+          <a href="#" :class="[theme === 'sale' ? 'sale-theme-btn' : 'normal-theme-btn', 'signup-button']">Sign
+            Up</a>
+          <a href="#" :class="[theme === 'sale' ? 'sale-theme-btn' : 'normal-theme-btn', 'login-button']">Login</a>
+          <a href="#" :class="[theme === 'sale' ? 'sale-theme-btn' : 'normal-theme-btn', 'theme-btn']"
+            @click="themeHandler()">{{ theme === "sale" ? "Normal Theme" : "Sale Theme" }}</a>
+        </template>
+      </ModalComponent>
     </div>
-  </div>
-  <div class="modal" v-if="showModal" @click="closeModal()">
-    <ModalComponent title="Sign up for the Giveaway!" content="Grab Your ninja swag for half price!" :theme="theme">
-      <template #links>
-        <a href="#" :class="[theme === 'sale' ? 'signup-sale-button' : 'signup-normal-button']" class="signup-button">Sign Up</a>
-        <a href="#" :class="[theme === 'sale' ? 'login-sale-button' : 'login-normal-button']" class="login-button">Login</a>
-      </template>
-    </ModalComponent>
-  </div>
-</template>
+  </template>
 
 <script>
 import ModalComponent from "./components/ModalComponent.vue";
@@ -32,7 +36,7 @@ export default {
   },
   data: function () {
     return {
-      showModal: false,
+      showModalComponent: false,
       theme: "normal",
     };
   },
@@ -42,9 +46,11 @@ export default {
         this.$refs.focusInput.focus();
       }, 1);
     },
-    closeModal() {
-      this.showModal = false;
+
+    showModal() {
+      this.showModalComponent = !this.showModalComponent;
     },
+
     themeHandler() {
       this.theme = this.theme === "sale" ? "normal" : "sale";
     },
@@ -60,7 +66,7 @@ export default {
   margin-top: 60px;
 }
 
-a{
+a {
   text-decoration: none;
 }
 
@@ -100,7 +106,17 @@ a{
     rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
 }
 
-.signup-button, .login-button{
+.theme-btn {
+  outline: none;
+  border: none;
+  padding: 7px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.signup-button,
+.login-button {
   outline: none;
   padding: 7px 12px;
   border-radius: 5px;
@@ -108,18 +124,17 @@ a{
   font-size: 1rem;
 }
 
-.signup-normal-button,.login-normal-button{
+.normal-theme-btn {
   color: #05b7b0;
   background-color: #fff;
   border: 1px solid #05b7b0;
 }
 
-.signup-sale-button,.login-sale-button{
+.sale-theme-btn {
   color: #EC283A;
   background-color: #fff;
   border: 1px solid #EC283A;
 }
-
 
 .btn-container button:hover {
   color: #2563eb;
